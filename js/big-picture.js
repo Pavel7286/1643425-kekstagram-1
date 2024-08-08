@@ -7,6 +7,9 @@ const socialCommentCount = document.querySelector('.social__comment-count');
 const socialComment = document.querySelector('.social__comment');
 const socialCommentsContainer = document.querySelector('.social__comments');
 
+const MAX_COMMENTS = 5;
+let commentsShown = 0;
+
 const renderComments = (comments) => {
   const createCommentFragment = document.createDocumentFragment();
 
@@ -38,12 +41,31 @@ const openUserModal = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
+const createComments = (data) => {
+  commentsShown += MAX_COMMENTS;
+  if (commentsShown >= data.comments.length) {
+    commentsLoader.classList.add('hidden');
+    commentsShown = data.comments.length;
+  } else {
+    commentsLoader.classList.remove('hidden');
+  }
+  debugger;
+  const fragmentComments = document.createDocumentFragment();
+  for (let i = 0; i < commentsShown; i++) {
+    const commentElement = renderComments(Object.entries(data.comments[i]));
+    fragmentComments.append(commentElement);
+  }
+  socialCommentsContainer.innerHTML = '';
+  socialCommentsContainer.append(fragmentComments);
+};
+
 const renderBigPicture = (data) => {
+
   openUserModal();
-  commentsLoader.classList.add('hidden');
-  socialCommentCount.classList.add('hidden');
+  createComments(data);
   renderBigPhoto(data);
 };
+
 
 //закрытие модалки
 const onDocumentKeydown = (evt) => {

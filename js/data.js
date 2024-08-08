@@ -44,7 +44,7 @@ const getPictures = (index) => ({
   url: `photos/${index}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(LIKES_MIN_COUNT, LIKES_MAX_COUNT),
-  comments: Array.from({ length: getRandomInteger(1, 5) }, createComment)
+  comments: Array.from({ length: getRandomInteger(1, 7) }, createComment)
 });
 
 const createDuplicatesPictures = () => Array.from({ length: PICTURE_COUNT }, (_, index) => getPictures(index + 1));
